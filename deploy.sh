@@ -53,12 +53,12 @@ done
 echo "Setting up SSH keys on primary"
 ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$PRIMARY_PUBLIC_IP" "sudo mkdir /var/lib/pgsql/.ssh"
 scp -oStrictHostKeyChecking=no -i sshkeys/id_rsa sshkeys/id_rsa.pub ec2-user@"$PRIMARY_PUBLIC_IP:/tmp/authorized_keys"
-ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$PRIMARY_PUBLIC_IP" "sudo mv  /tmp/authorized_keys /var/lib/pgsql/.ssh/ && sudo chown -R postgres:postgres /var/lib/pgsql/.ssh/"
+ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$PRIMARY_PUBLIC_IP" "sudo mkdir -p /var/lib/pgsql/.ssh/ && sudo mv /tmp/authorized_keys /var/lib/pgsql/.ssh/ && sudo chown -R postgres:postgres /var/lib/pgsql/.ssh/"
 
 echo "Setting up SSH keys on secondary"
 ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$SECONDARY_PUBLIC_IP" "sudo mkdir /var/lib/pgsql/.ssh"
 scp -oStrictHostKeyChecking=no -i sshkeys/id_rsa sshkeys/id_rsa.pub ec2-user@"$SECONDARY_PUBLIC_IP:/tmp/authorized_keys"
-ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$SECONDARY_PUBLIC_IP" "sudo mv  /tmp/authorized_keys /var/lib/pgsql/.ssh/ && sudo chown -R postgres:postgres /var/lib/pgsql/.ssh/"
+ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa ec2-user@"$SECONDARY_PUBLIC_IP" "sudo mkdir -p /var/lib/pgsql/.ssh/ && sudo mv /tmp/authorized_keys /var/lib/pgsql/.ssh/ && sudo chown -R postgres:postgres /var/lib/pgsql/.ssh/"
 
 echo "Creating users on primary database"
 ssh -oStrictHostKeyChecking=no -i sshkeys/id_rsa postgres@"$PRIMARY_PUBLIC_IP" "bash -s $ONE_TO_RULE_THEM_ALL" < db_replication_setup/01_create_users.sh
