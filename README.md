@@ -22,7 +22,7 @@ Diagram is located in doc-diagram directory inside the repository.
 Following rest enpoints are provided:
 - /hello/\<username>
 	* get:
-	Will return \<username>  record stored in database, along with a date of next birtday.
+	Will return \<username>  record stored in database, along with a date of next birtday. If users birthday is today it will return wishes.
 	* put:
 	Send with parameter "birthday" will store \<username> record in database along with his date of birth.
 - /health/
